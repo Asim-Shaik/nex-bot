@@ -1,144 +1,280 @@
-# Music-bot
+# 🎵 Nex-Bot - Advanced Discord Music Bot
 
-A complete code to download for a music bot 🎧
+A feature-rich Discord music bot built with Discord.js v14 and discord-player, offering high-quality music streaming with an intuitive interface and extensive customization options.
 
-Looking for a code for a music bot? This fully open-source code is made for your project!
+## ✨ Features
 
-If you need help with this project, to get support faster you can join the help server by just clicking [here](https://discord.gg/5cGSYV8ZZj).
+### 🎶 Music Features
 
-*If you don't have any development knowledge, it is recommended to join the Discord support server to get help.*
+- **High-Quality Audio**: Support for YouTube, Spotify, SoundCloud, and more
+- **Queue Management**: Add, remove, shuffle, and organize your music queue
+- **Advanced Playback Controls**: Play, pause, skip, seek, volume control, and loop modes
+- **Interactive Controls**: Button-based interface for easy music control
+- **Search Functionality**: Search for tracks directly within Discord
+- **Lyrics Support**: Display synchronized lyrics for currently playing tracks
+- **Save Tracks**: Save your favorite tracks to your personal collection
+- **History Tracking**: View recently played tracks
+- **Audio Filters**: Apply various audio effects and filters
 
-### ⚡ Configuration
+### 🛠️ Technical Features
 
-Open the configuration file located in the main folder `config.js`.
+- **Slash Commands**: Modern Discord slash command integration
+- **Multi-language Support**: Built-in translation system
+- **DJ Role Support**: Restrict music commands to specific roles
+- **Auto-disconnect**: Automatically leave voice channels when inactive
+- **Error Handling**: Comprehensive error management and logging
+- **Configurable Settings**: Extensive customization options
 
-```js
+## 📋 Requirements
+
+- **Node.js**: Version 16.9.0 or higher
+- **Discord Bot Token**: From Discord Developer Portal
+- **FFmpeg**: For audio processing (included via ffmpeg-static)
+
+## 🚀 Installation
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+TOKEN=your_discord_bot_token_here
+```
+
+### 4. Configuration
+
+The bot configuration is handled in `config.js`. Key settings include:
+
+```javascript
 module.exports = {
-    app: {
-        token: 'XXX',
-        playing: 'by asim',
-        global: true,
-        guild: 'xxx',
-        extraMessages: false,
-        loopMessage: false,
-        lang: 'en',
-        Translate_Timeout: 10000,
-        enableEmojis: false
-},
-    opt: {
-        DJ: {
-            enabled: false,
-            roleName: '',
-            commands: []
-        },
-        maxVol: 100,
-        spotifyBridge: true,
-        volume: 75,
-        leaveOnEmpty: true,
-        leaveOnEmptyCooldown: 60000,
-        leaveOnEnd: true,
-        leaveOnEndCooldown: 60000,
-        discordPlayer: {
-            ytdlOptions: {
-                quality: 'highestaudio',
-                highWaterMark: 1 << 25
-            }
-        }
-    }
+  app: {
+    token: process.env.TOKEN, // Bot token from .env
+    global: true, // Global slash commands (true) or guild-specific (false)
+    guild: "xxx", // Guild ID for guild-specific commands
+    lang: "en", // Default language
+    enableEmojis: false, // Enable custom emojis
+  },
+
+  opt: {
+    maxVol: 200, // Maximum volume (%)
+    volume: 50, // Default volume (%)
+    leaveOnEmpty: true, // Leave when voice channel is empty
+    leaveOnEmptyCooldown: 30000, // Cooldown before leaving (ms)
+    leaveOnEnd: true, // Leave when queue ends
+    leaveOnEndCooldown: 30000, // Cooldown before leaving (ms)
+    spotifyBridge: true, // Enable Spotify support
+  },
 };
 ```
 
-Basic configuration
+### 5. Discord Bot Setup
 
-- `app/token`, the token of the bot available on the [Discord Developers](https://discordapp.com/developers/applications) section
-- `app/playing`, the activity of the bot
-- `app/global`, whether the commands will work on all servers or just one (if global they might take up to an hour to show up)
-- `app/guild`, the guild the slash command will be loaded to (this only applies if global is set to false)
-- `app/extraMessages` will increase the amount of bot spam, while you get more infomation (not recommended) 
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Create a new application
+3. Go to "Bot" section and create a bot
+4. Copy the bot token to your `.env` file
+5. Enable the following bot permissions:
+   - Send Messages
+   - Use Slash Commands
+   - Connect to Voice Channels
+   - Speak in Voice Channels
+   - Use Voice Activity
 
-- `app/lang` will change the bot client language [__**See below for supported language codes**__]
+### 6. Invite Bot to Server
 
-- `app/Translate_Timeout` will set the time limit the bot has to create the translation succesfully. If the time is out, only the original english version will be printed. Set to `none` if you want to disable it (No Timeout). 
+Generate an invite link with the following permissions:
 
-- `app/enableEmojis` will change the player buttons with emojis if set to true. `false` will replace them by basic english words
+- `applications.commands` (for slash commands)
+- `bot` with necessary permissions listed above
 
-- `opt/loopMessage`, if the message that a music is played should be sent when it is looped
+## ▶️ Running the Bot
 
-DJ mode configuration
+### Development
 
-- `opt/DJ/enabled`, whether the DJ mode should be activated or not 
-- `opt/DJ/roleName`, the name of the DJ role to be used
-- `opt/DJ/commands`, the list of commands limited to members with the DJ role
+```bash
+npm start
+```
 
-Advanced configuration (only change if you know what you are doing)
+### Production (with PM2)
 
-- `opt/maxVol`, the maximum volume that users can define
-- `opt/spotifyBridge`, takes spotify songs/playlists and searches it on youtube and plays it (highly recommended)
-- `opt/volume`, is the defaul volume the queue will start at
-- `opt/leaveOnEmpty`, if the bot will leave when the queue is empty
-- `opt/leaveOnEmptyCooldown`, the cooldown before the bot leaves when the queue is empty
-- `opt/leaveOnEnd`,  if the bot will leave on finishing the queue
-- `opt/leaveOnEndCooldown`, the cooldown before the bot leaves on finishing the queue
-- `opt/discordPlayer`, options used by discord-player
+```bash
+npm install -g pm2
+pm2 start main.js --name "nex-bot"
+```
 
-### 📑 Installation
-To use the project correctly you will need some tools.
+## 🎵 Commands
 
-WARNING: You MUST use Node.js version `v18.20.2`, otherwise, you will encounter major compatibility issues.
+### Music Commands
 
-[FFmpeg](https://www.ffmpeg.org) to process audio
+| Command         | Description                   | Usage                          |
+| --------------- | ----------------------------- | ------------------------------ |
+| `/play`         | Play a song or playlist       | `/play query:Song name or URL` |
+| `/playnext`     | Add song to play next         | `/playnext query:Song name`    |
+| `/pause`        | Pause current track           | `/pause`                       |
+| `/resume`       | Resume playback               | `/resume`                      |
+| `/skip`         | Skip current track            | `/skip`                        |
+| `/stop`         | Stop playback and clear queue | `/stop`                        |
+| `/queue`        | Display current queue         | `/queue`                       |
+| `/nowplaying`   | Show currently playing track  | `/nowplaying`                  |
+| `/volume`       | Adjust volume (0-200%)        | `/volume level:50`             |
+| `/seek`         | Seek to specific time         | `/seek time:1:30`              |
+| `/loop`         | Set loop mode                 | `/loop mode:track/queue/off`   |
+| `/shuffle`      | Shuffle the queue             | `/shuffle`                     |
+| `/clear`        | Clear the queue               | `/clear`                       |
+| `/remove`       | Remove specific track         | `/remove position:3`           |
+| `/jump`         | Jump to specific track        | `/jump position:5`             |
+| `/back`         | Play previous track           | `/back`                        |
+| `/skipto`       | Skip to specific track        | `/skipto position:3`           |
+| `/search`       | Search for tracks             | `/search query:Song name`      |
+| `/lyrics`       | Display lyrics                | `/lyrics`                      |
+| `/syncedlyrics` | Display synchronized lyrics   | `/syncedlyrics`                |
+| `/save`         | Save current track            | `/save`                        |
+| `/history`      | View play history             | `/history`                     |
+| `/filter`       | Apply audio filters           | `/filter name:bassboost`       |
+| `/controller`   | Display music controller      | `/controller`                  |
 
-[Node JS](https://nodejs.org/en/) (`v18.20.2`) for environment
+### Core Commands
 
-[yarn](https://yarnpkg.com/getting-started/usage) for package management
+| Command | Description           | Usage   |
+| ------- | --------------------- | ------- |
+| `/help` | Show help information | `/help` |
+| `/ping` | Check bot latency     | `/ping` |
 
-Without forgetting of course the code editor, we recommend [visual studio code](https://code.visualstudio.com/) 
+## 🎛️ Interactive Controls
 
-Now in your terminal run the following commands assuming you are in the same directory as the project.
+The bot features interactive button controls for easy music management:
 
-`yarn install` (or `npm install` **not recommended** as it might not work)
+- ⏯️ **Play/Pause**: Toggle playback
+- ⏩ **Skip**: Skip to next track
+- ⏪ **Back**: Play previous track
+- 🔁 **Loop**: Cycle through loop modes
+- 🔀 **Shuffle**: Shuffle the queue
+- ⏹️ **Stop**: Stop playback
+- 🔊/🔉 **Volume**: Adjust volume
+- 💾 **Save**: Save current track
+- 📋 **Queue**: View queue
+- 📝 **Lyrics**: Display lyrics
 
-`node .` (or `node main.js`)
+## 🔧 Advanced Configuration
 
-and Done, your bot should be running!
+### DJ Role Setup
 
-Realized with ❤️ by the Community.
+Enable DJ role restrictions in `config.js`:
 
-Please do not withdraw the license and keep the credits on this project. 
+```javascript
+DJ: {
+  enabled: true,
+  roleName: "DJ",
+  commands: ["skip", "stop", "clear", "shuffle"]
+}
+```
 
-To have full access to the project and to be able to withdraw the credits a small donation is accepted.
+### Custom Emojis
 
-### ❗supported languages: 
+Configure custom emojis in `config.js`:
 
-| Code | Language | Code | Language | Code | Language |
-| ---- | -------- | ---- | -------- | ---- | -------- |
-| `af` | Afrikaans | `bn` | Bengali | `da` | Danish |
-| `sq` | Albanian | `bg` | Bulgarian | `nl` | Dutch |
-| `ar` | Arabic | `ca` | Catalan | `en` | English |
-| `hy` | Armenian | `hr` | Croatian | `et` | Estonian |
-| `eu` | Basque | `cs` | Czech | `fi` | Finnish |
-| `be` | Belarusian | `cy` | Welsh | `fr` | French |
-| `bs` | Bosnian | `de` | German | `ga` | Irish |
-| `ja` | Japanese | `jv` | Javanese | `ka` | Georgian |
-| `kn` | Kannada | `kk` | Kazakh | `km` | Khmer |
-| `ko` | Korean | `ku` | Kurdish | `ky` | Kyrgyz |
-| `la` | Latin | `lb` | Luxembourgish | `lo` | Lao |
-| `lt` | Lithuanian | `lv` | Latvian | `mg` | Malagasy |
-| `mi` | Maori | `mk` | Macedonian | `ml` | Malayalam |
-| `mn` | Mongolian | `mr` | Marathi | `ms` | Malay |
-| `mt` | Maltese | `my` | Burmese | `ne` | Nepali |
-| `no` | Norwegian | `ny` | Chichewa | `pa` | Punjabi |
-| `pl` | Polish | `ps` | Pashto | `pt` | Portuguese |
-| `ro` | Romanian | `ru` | Russian | `sd` | Sindhi |
-| `si` | Sinhalese | `sk` | Slovak | `sl` | Slovenian |
-| `sm` | Samoan | `sn` | Shona | `so` | Somali |
-| `sq` | Albanian | `sr` | Serbian | `st` | Sesotho |
-| `su` | Sundanese | `sv` | Swedish | `sw` | Swahili |
-| `ta` | Tamil | `te` | Telugu | `th` | Thai |
-| `tr` | Turkish | `uk` | Ukrainian | `ur` | Urdu |
-| `vi` | Vietnamese | `xh` | Xhosa | `yi` | Yiddish |
-| `zu` | Zulu | `id` | Indonesian | | |
+```javascript
+emojis: {
+  back: "⏪",
+  skip: "⏩",
+  ResumePause: "⏯️",
+  savetrack: "💾",
+  volumeUp: "🔊",
+  volumeDown: "🔉",
+  loop: "🔁",
+}
+```
 
-### 📝 ToDo 
+### Audio Quality Settings
 
--  [ ] Vote to skip command https://github.com/ZerioDev/Music-bot/issues/187
+Adjust audio quality in `config.js`:
+
+```javascript
+discordPlayer: {
+  ytdlOptions: {
+    quality: "highestaudio",
+    highWaterMark: 1 << 25,
+  },
+}
+```
+
+## 🌐 Multi-language Support
+
+The bot supports multiple languages through the translation system:
+
+1. Set your preferred language in `config.js`:
+
+   ```javascript
+   lang: "es"; // Spanish, "fr" for French, etc.
+   ```
+
+2. Supported languages include: English, Spanish, French, German, Italian, Portuguese, and many more.
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**Bot not responding to commands:**
+
+- Ensure the bot has proper permissions
+- Check if slash commands are properly registered
+- Verify the bot token is correct
+
+**Audio not playing:**
+
+- Ensure FFmpeg is properly installed
+- Check voice channel permissions
+- Verify the bot can connect to voice channels
+
+**Commands not loading:**
+
+- Check file structure in `commands/` directory
+- Ensure all command files have proper exports
+- Check console for loading errors
+
+**Translation errors:**
+
+- Verify internet connection for translation service
+- Check language code validity
+- Increase translation timeout if needed
+
+### Error Logs
+
+The bot provides detailed error logging. Check console output for:
+
+- Command loading status
+- Event registration
+- Connection issues
+- Audio streaming errors
+
+## 📁 Project Structure
+
+```
+nex-bot/
+├── commands/           # Slash commands
+│   ├── music/         # Music-related commands
+│   └── core/          # Core bot commands
+├── events/            # Event handlers
+│   ├── Discord/       # Discord.js events
+│   └── Player/        # discord-player events
+├── buttons/           # Interactive button handlers
+├── config.js          # Bot configuration
+├── main.js           # Entry point
+├── loader.js         # Command/event loader
+├── process_tools.js  # Utility functions
+└── package.json      # Dependencies
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
